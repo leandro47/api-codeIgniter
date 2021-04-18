@@ -3,20 +3,20 @@
 namespace App\Services;
 
 use CodeIgniter\HTTP\Response;
-use App\Repositories\AboutMeRepository;
+use App\Repositories\SkillRepository;
 
-class AboutMeService
+class SkillService
 {
-    private $aboutMeRepository;
+    private $skillRepository;
 
     public function __construct()
     {
-        $this->aboutMeRepository = new AboutMeRepository();
+        $this->skillRepository = new SkillRepository();
     }
 
-    public function getById(int $id): array
+    public function get(): array
     {
-        $result = $this->aboutMeRepository->get($id);
+        $result = $this->skillRepository->get();
 
         if ($result) {
             return [

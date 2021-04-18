@@ -18,8 +18,8 @@ if (file_exists(SYSTEMPATH . 'Config/Routes.php'))
  * --------------------------------------------------------------------
  */
 $routes->setDefaultNamespace('App\Controllers');
-$routes->setDefaultController('Home');
-$routes->setDefaultMethod('index');
+$routes->setDefaultController('AboutMeController');
+$routes->setDefaultMethod('welcome');
 $routes->setTranslateURIDashes(false);
 $routes->set404Override();
 $routes->setAutoRoute(true);
@@ -34,6 +34,8 @@ $routes->setAutoRoute(true);
 // route since we don't have to scan directories.
 $routes->get('/', 'AboutMeController::welcome');
 $routes->get('/aboutme/(:num)', 'AboutMeController::getById/$1');
+$routes->get('/experience', 'ExperienceController::get');
+$routes->get('/skill', 'SkillController::get');
 
 /*
  * --------------------------------------------------------------------

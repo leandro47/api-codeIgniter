@@ -3,8 +3,6 @@
 namespace App\Repositories;
 
 use App\Models\AboutMeModel;
-use Exception;
-
 class AboutMeRepository
 {
     protected $aboutMe;

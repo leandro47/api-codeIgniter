@@ -2,7 +2,9 @@
 
 namespace Config;
 
-use CodeIgniter\Config\BaseService;
+use CodeIgniter\Config\BaseService as CoreServices;
+use CodeIgniter\HTTP\Response;
+
 
 /**
  * Services Configuration file.
@@ -17,15 +19,24 @@ use CodeIgniter\Config\BaseService;
  * method format you should use for your service methods. For more examples,
  * see the core Services file at system/Config/Services.php.
  */
-class Services extends BaseService
+class Services extends CoreServices
 {
-	// public static function example($getShared = true)
-	// {
-	//     if ($getShared)
-	//     {
-	//         return static::getSharedInstance('example');
-	//     }
-	//
-	//     return new \CodeIgniter\Example();
-	// }
+    // public static function example($getShared = true)
+    // {
+    //     if ($getShared)
+    //     {
+    //         return static::getSharedInstance('example');
+    //     }
+    //
+    //     return new \CodeIgniter\Example();
+    // }
+
+    public static function options(): Response
+    {
+        return Services::response()
+            ->setHeader('Access-Control-Allow-Origin', '*') //for allow any domain, insecure
+            ->setHeader('Access-Control-Allow-Headers', '*') //for allow any headers, insecure
+            ->setHeader('Access-Control-Allow-Methods', 'GET') //method allowed
+            ->setStatusCode(200); //status code
+    }
 }

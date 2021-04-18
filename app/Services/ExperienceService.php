@@ -3,20 +3,20 @@
 namespace App\Services;
 
 use CodeIgniter\HTTP\Response;
-use App\Repositories\AboutMeRepository;
+use App\Repositories\ExperienceRepository;
 
-class AboutMeService
+class ExperienceService
 {
-    private $aboutMeRepository;
+    private $experienceRepository;
 
     public function __construct()
     {
-        $this->aboutMeRepository = new AboutMeRepository();
+        $this->experienceRepository = new ExperienceRepository();
     }
 
-    public function getById(int $id): array
+    public function get(): array
     {
-        $result = $this->aboutMeRepository->get($id);
+        $result = $this->experienceRepository->get();
 
         if ($result) {
             return [
