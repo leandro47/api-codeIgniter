@@ -11,7 +11,16 @@ class ApiFilter implements FilterInterface
 {
     public function before(RequestInterface $request, $arguments = null)
     {
-        Services::options();
+        if (Services::checkAuth($request)) {
+            Services::options();
+        } else {
+            return Services::response()
+                ->setStatusCode(403)
+                ->setJSON([
+                    'code'    => 403,
+                    'message' => 'Access denied! You must have a authorization key valid.'
+                ]);
+        }
     }
 
     public function after(RequestInterface $request, ResponseInterface $response, $arguments = null)

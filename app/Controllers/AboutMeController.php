@@ -4,7 +4,6 @@ namespace App\Controllers;
 
 use CodeIgniter\RESTful\ResourceController;
 use App\Services\AboutMeService;
-
 class AboutMeController extends ResourceController
 {
     private $aboutMeServices;

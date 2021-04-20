@@ -30,7 +30,11 @@ class Filters extends BaseConfig
 	 */
 	public $globals = [
 		'before' => [
-			'ApiFilter'
+			'ApiFilter' => [
+				'except' => [
+					'auth/'
+				]
+			]
 			// 'honeypot',
 			// 'csrf',
 		],

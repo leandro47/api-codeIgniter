@@ -36,6 +36,7 @@ $routes->get('/', 'AboutMeController::welcome');
 $routes->get('/aboutme/(:num)', 'AboutMeController::getById/$1');
 $routes->get('/experience', 'ExperienceController::get');
 $routes->get('/skill', 'SkillController::get');
+$routes->post('/auth', 'UserController::auth');
 
 /*
  * --------------------------------------------------------------------

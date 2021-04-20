@@ -10,7 +10,7 @@ class SkillRepository
 
     public function __construct()
     {
-        $this->skill = new SkillModel;
+        $this->skill = new SkillModel();
     }
 
     public function get()

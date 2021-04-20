@@ -3,6 +3,7 @@
 namespace Config;
 
 use CodeIgniter\Config\BaseService as CoreServices;
+use CodeIgniter\HTTP\IncomingRequest;
 use CodeIgniter\HTTP\Response;
 
 
@@ -21,15 +22,7 @@ use CodeIgniter\HTTP\Response;
  */
 class Services extends CoreServices
 {
-    // public static function example($getShared = true)
-    // {
-    //     if ($getShared)
-    //     {
-    //         return static::getSharedInstance('example');
-    //     }
-    //
-    //     return new \CodeIgniter\Example();
-    // }
+    private static $key = 'c1isvFdDMDdmjsdlvsddfxpecFw';
 
     public static function options(): Response
     {
@@ -38,5 +31,63 @@ class Services extends CoreServices
             ->setHeader('Access-Control-Allow-Headers', '*') //for allow any headers, insecure
             ->setHeader('Access-Control-Allow-Methods', 'GET') //method allowed
             ->setStatusCode(200); //status code
+    }
+
+    public static function generateToken(String $user)
+    {
+        $header = [
+            'typ' => 'JWT',
+            'alg' => 'HS256'
+        ];
+
+        //Payload - Content
+        $payload = [
+            'name' => $user
+        ];
+
+        //JSON
+        $header = json_encode($header);
+        $payload = json_encode($payload);
+
+        //Base 64
+        $header = self::base64UrlEncode($header);
+        $payload = self::base64UrlEncode($payload);
+
+        //Sign
+        $sign = hash_hmac('sha256', $header . "." . $payload, self::$key, true);
+        $sign = self::base64UrlEncode($sign);
+
+        //Token
+        return $header . '.' . $payload . '.' . $sign;
+    }
+
+    public static function checkAuth(IncomingRequest $request): bool
+    {
+        if (!is_null($request->getHeader('Authorization'))) {
+            $header = explode(' ', $request->getHeader('Authorization'));
+            $token = explode('.', $header[2]);
+
+            $tokenHeader = $token[0];
+            $payloadHeader = $token[1];
+            $singHeader = $token[2];
+
+            $valid = hash_hmac('sha256', $tokenHeader . "." . $payloadHeader, self::$key, true);
+            $valid = self::base64UrlEncode($valid);
+
+            return ($singHeader === $valid);
+        }
+        return false;
+    }
+
+    private static function base64UrlEncode($data)
+    {
+        // First of all you should encode $data to Base64 string
+        $b64 = base64_encode($data);
+
+        // Convert Base64 to Base64URL by replacing “+” with “-” and “/” with “_”
+        $url = strtr($b64, '+/', '-_');
+
+        // Remove padding character from the end of line and return the Base64URL result
+        return rtrim($url, '=');
     }
 }
