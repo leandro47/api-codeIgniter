@@ -29,8 +29,7 @@ class Services extends CoreServices
         return Services::response()
             ->setHeader('Access-Control-Allow-Origin', '*') //for allow any domain, insecure
             ->setHeader('Access-Control-Allow-Headers', '*') //for allow any headers, insecure
-            // ->setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, DELETE') //method allowed
-            ->setHeader('Access-Control-Allow-Methods', '*') //method allowed
+            ->setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, DELETE') //method allowed
             ->setStatusCode(200); //status code
     }
 
