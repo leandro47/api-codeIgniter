@@ -32,7 +32,8 @@ class Filters extends BaseConfig
 		'before' => [
 			'ApiFilter' => [
 				'except' => [
-					'auth/'
+					'auth/',
+					'resume/'
 				]
 			]
 			// 'honeypot',
